@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Board extends Model
 {
-    protected $fillable = ['title'];
+    protected $fillable = ['title' ,'user_id'];
 
 public function user(): belongsTo
 {
