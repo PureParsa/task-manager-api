@@ -32,7 +32,7 @@ class BoardController extends Controller
         }
         $validated = $request->validated();
         $board->update($validated);
-        return response()->json($board, 200);
+        return response()->json($board->fresh(), 200);
     }
     public function show(board $board){
         if ($board->user_id !== auth()->id()) {
