@@ -27,9 +27,9 @@ class StoreBoardRequest extends FormRequest
             'title' => [
                 'required',
                 'string',
-                'max:255',
-                Rule::unique('boards', 'title')->where('user_id', auth()->id()),
-            ],
-            ];
+                'max:100',
+                Rule::unique('boards', 'title')
+                    ->where('user_id', auth()->id()),
+            ],];
     }
 }

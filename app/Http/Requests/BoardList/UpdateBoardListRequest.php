@@ -23,7 +23,11 @@ class UpdateBoardListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|required|string|max:255|',
+            'title' => [
+                'sometime',
+                'required',
+                'string',
+                'max:100',],
         ];
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('position')->nullable();
             $table->text('description')->nullable();
             $table->dateTime('due_date')->nullable();
+            $table->boolean('is_completed')->nullable()->default(false);
             $table->timestamps();
         });
     }
