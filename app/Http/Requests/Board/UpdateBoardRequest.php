@@ -24,8 +24,13 @@ class UpdateBoardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['sometimes', 'required', 'string', 'max:255',
-                Rule::unique('boards', 'title')->where('user_id', auth()->id()),
-            ],        ];
+            'title' => [
+                'sometimes',
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('boards', 'title')
+                    ->where('user_id', auth()->id()),
+            ],];
     }
 }

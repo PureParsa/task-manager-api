@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Card extends Model
 {
-    protected $fillable = ['title' , 'description' , 'position' , 'due_date'];
+    protected $fillable = ['title' , 'description' , 'position' , 'due_date','is_completed'];
 
     public function list(): belongsTo
     {

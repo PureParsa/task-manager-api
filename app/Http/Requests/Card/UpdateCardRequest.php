@@ -23,9 +23,30 @@ class UpdateCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|required|string|max:255|' ,
-            'position' => 'sometimes|required|integer'
+            'title' => [
+                'sometimes',
+                'required',
+                'string',
+                'max:100',],
 
+            'description' => [
+                'sometimes',
+                'nullable',
+                'string',
+                'max:2000'],
+            'position' => [
+                'sometimes',
+                'nullable',
+                'numeric',
+                'integer'],
+            'due_date' =>[
+                'sometimes',
+                'nullable',
+                'date'],
+            'is_completed' =>[
+                'sometimes',
+                'nullable',
+                'boolean']
         ];
     }
 }
