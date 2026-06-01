@@ -14,7 +14,7 @@ public function user(): belongsTo
 {
     return $this->belongsTo(User::class);
 }
-public function boardLists(): HasMany
+public function lists(): HasMany
 {
     return $this->hasMany(BoardList::class);
 }
