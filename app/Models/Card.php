@@ -9,8 +9,8 @@ class Card extends Model
 {
     protected $fillable = ['title' , 'description' , 'position' , 'due_date'];
 
-    public function boardList(): belongsTo
+    public function list(): belongsTo
     {
-        return $this->belongsTo(BoardList::class);
+        return $this->belongsTo(BoardList::class , 'board_list_id');
     }
 }

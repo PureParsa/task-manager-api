@@ -15,7 +15,7 @@ class BoardListController extends Controller
         if($board->user_id != auth()->user()->id){
             return response()->json(['message' => 'Forbidden'], 403);
         }
-        $lists = $board->boardLists()->orderBy('created_at', 'desc')->get();
+        $lists = $board->lists()->orderBy('created_at', 'desc')->get();
         return response()->json($lists, 200);
     }
 
@@ -24,7 +24,7 @@ class BoardListController extends Controller
             return response()->json(['message' => 'Forbidden'], 403);
         }
         $validated = $request->validated();
-        $list =$board->boardLists()->create($validated);
+        $list =$board->lists()->create($validated);
         return response()->json($list, 201);
     }
     public function show(Board $board, BoardList $list)
