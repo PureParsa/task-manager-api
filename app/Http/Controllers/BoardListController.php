@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BoardList\StoreBoardListRequest;
 use App\Http\Requests\BoardList\UpdateBoardListRequest;
+use App\Http\Resources\BoardListResource;
 use App\Models\Board;
 use App\Models\BoardList;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class BoardListController extends Controller
             return response()->json(['message' => 'Forbidden'], 403);
         }
         $lists = $board->lists()->orderBy('created_at', 'desc')->get();
-        return response()->json($lists, 200);
+        return response()->json(BoardListResource::collection($lists), 200);
     }
 
     public function store(StoreBoardListRequest $request, board $board){
@@ -25,7 +26,7 @@ class BoardListController extends Controller
         }
         $validated = $request->validated();
         $list =$board->lists()->create($validated);
-        return response()->json($list, 201);
+        return response()->json(new BoardListResource($list), 201);
     }
     public function show(Board $board, BoardList $list)
     {
@@ -33,7 +34,7 @@ class BoardListController extends Controller
             return response()->json(['message' => 'Forbidden'], 403);
         }
 
-        return response()->json($list, 200);
+        return response()->json(new BoardListResource($list), 200);
     }
 
     public function update(UpdateBoardListRequest $request, board $board, BoardList $list)
@@ -43,7 +44,7 @@ class BoardListController extends Controller
         }
         $validated = $request->validated();
         $list->update($validated);
-        return response()->json($list->fresh(), 200);
+        return response()->json(new BoardListResource($list), 200);
     }
     public function destroy(Board $board, BoardList $list)
     {

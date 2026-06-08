@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Card extends Model
 {
     protected $fillable = ['title' , 'description' , 'position' , 'due_date','is_completed'];
-
+    protected $casts = [
+        'due_date'     => 'datetime',
+        'is_completed' => 'boolean',
+    ];
     public function list(): belongsTo
     {
         return $this->belongsTo(BoardList::class , 'board_list_id');
