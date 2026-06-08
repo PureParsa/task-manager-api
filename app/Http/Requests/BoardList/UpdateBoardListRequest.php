@@ -24,7 +24,7 @@ class UpdateBoardListRequest extends FormRequest
     {
         return [
             'title' => [
-                'sometime',
+                'sometimes',
                 'required',
                 'string',
                 'max:100',],
