@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginUserRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,7 +26,7 @@ class AuthController extends Controller
 
         return response()->json([
             "message" => "register success",
-            "user" => $user,
+            "user" => new UserResource($user),
             "token" => $token->plainTextToken,
         ], 201);
     }
@@ -46,9 +47,9 @@ class AuthController extends Controller
 
         return response()->json([
             "message" => "login success",
-            "user" => $user,
+            "user" => new UserResource($user),
             "token" => $token->plainTextToken,
-        ]);
+        ] , 200);
     }
 
     public function logout(Request $request)
@@ -57,6 +58,6 @@ class AuthController extends Controller
 
         return response()->json([
             "message" => "logout success"
-        ]);
+        ] , 200);
     }
 }

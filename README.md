@@ -1,58 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task Manager API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Trello-inspired REST API built with Laravel 11 & Sanctum.
 
-## About Laravel
+## Tech Stack
+- PHP / Laravel 11
+- MySQL
+- Laravel Sanctum (token authentication)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
+- [x] User authentication (register, login, logout)
+- [x] Board management (CRUD)
+- [x] List management (CRUD)
+- [x] Card management (CRUD)
+- [ ] Ownership authorization(in progress)
+- [ ] Policies (in progress)
+- [ ] Tests (in progress)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
+git clone https://github.com/PureParsa/task-manager-api.git
+cd task-manager-api
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan serve
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## API Endpoints
 
-## Learning Laravel
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/register | Register new user |
+| POST | /api/login | Get access token |
+| POST | /api/logout | Revoke token |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Boards
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/boards | Get all boards |
+| POST | /api/boards | Create a board |
+| GET | /api/boards/{board} | Get one board |
+| PATCH | /api/boards/{board} | Update a board |
+| DELETE | /api/boards/{board} | Delete a board |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Lists
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/boards/{board}/lists | Get all lists |
+| POST | /api/boards/{board}/lists | Create a list |
+| GET | /api/boards/{board}/lists/{list} | Get one list |
+| PATCH | /api/boards/{board}/lists/{list} | Update a list |
+| DELETE | /api/boards/{board}/lists/{list} | Delete a list |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Cards
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/boards/{board}/lists/{list}/cards | Get all cards |
+| POST | /api/boards/{board}/lists/{list}/cards | Create a card |
+| GET | /api/boards/{board}/lists/{list}/cards/{card} | Get one card |
+| PATCH | /api/boards/{board}/lists/{list}/cards/{card} | Update a card |
+| DELETE | /api/boards/{board}/lists/{list}/cards/{card} | Delete a card |
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Design Decisions
+- Used Sanctum over Passport for token auth — simpler and fits API-only use case
+- Nested resource routing to reflect data hierarchy
+- Form Requests for all validation — keeps controllers clean
+- Scoped route binding to prevent cross-user data access
