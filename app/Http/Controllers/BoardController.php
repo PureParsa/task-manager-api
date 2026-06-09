@@ -6,9 +6,6 @@ use App\Http\Requests\Board\StoreBoardRequest;
 use App\Http\Requests\Board\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-
 class BoardController extends Controller
 {
     public function index(){
@@ -28,23 +25,18 @@ class BoardController extends Controller
 
     public function update(UpdateBoardRequest $request, Board $board)
     {
-        if ($board->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
+        $this->authorize('update',$board);
         $validated = $request->validated();
         $board->update($validated);
         return response()->json(new BoardResource($board), 200);
     }
     public function show(board $board){
-        if ($board->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
+        $this->authorize('view',$board);
         return response()->json(new BoardResource($board), 200);
     }
     public function destroy(Board $board){
-        if ($board->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Forbidden'], 403);
-        }
+        $this->authorize('delete',$board);
+
         $board->delete();
         return response()->json(null, 204);
     }

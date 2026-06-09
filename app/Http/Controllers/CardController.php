@@ -15,20 +15,16 @@ class CardController extends Controller
 {
     public function index(Board $board, BoardList $list)
     {
-        if($list -> board->user_id !== auth()->id())
-        {
-            return response()->json(['message' =>'Forbidden'] , 403);
-        }
+        $this->authorize('view', $board);
+
         $cards = $list->cards;
         return response()->json(CardResource::collection($cards), 200);
     }
 
     public function store(StoreCardRequest $request,Board $board , BoardList $list)
     {
-        if($list->board->user_id !== auth()->id())
-        {
-            return response()->json(['message' =>'Forbidden'] , 403);
-        }
+        $this->authorize('update', $board);
+
         $validated = $request->validated();
 
         $cards =$list->cards()->create($validated);
@@ -36,28 +32,22 @@ class CardController extends Controller
     }
     public function show(Board $board , BoardList $list , Card $card)
     {
-        if($list->board->user_id !== auth()->id())
-        {
-            return response()->json(['message' =>'Forbidden'] , 403);
-        }
+        $this->authorize('view', $board);
+
         return response()->json(new CardResource($card) ,200 );
     }
     public function update(UpdateCardRequest $request , Board $board , BoardList $list ,Card $card)
     {
-        if($list->board->user_id !== auth()->id())
-        {
-            return response()->json(['message' =>'Forbidden'] , 403);
-        }
+        $this->authorize('update', $board);
+
         $validated = $request->validated();
         $card->update($validated);
         return response()->json(new CardResource($card) , 200);
     }
     public function destroy(UpdateCardRequest $request , Board $board , BoardList $list ,Card $card)
     {
-        if($list->board->user_id !== auth()->id())
-        {
-            return response()->json(['message' =>'Forbidden'] , 403);
-        }
+        $this->authorize('delete', $board);
+
         $card->delete();
         response()->json(null ,204 );
     }
