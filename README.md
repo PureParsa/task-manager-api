@@ -12,9 +12,11 @@ A Trello-inspired REST API built with Laravel 11 & Sanctum.
 - [x] Board management (CRUD)
 - [x] List management (CRUD)
 - [x] Card management (CRUD)
-- [ ] Ownership authorization(in progress)
-- [ ] Policies (in progress)
-- [ ] Tests (in progress)
+- [x] Ownership authorization (Laravel Policies)
+- [x] API Resources for consistent JSON responses
+- [x] Form Request validation
+- [ ] Feature tests (in progress)
+- [ ] Deploy (in progress)
 
 ## Installation
 git clone https://github.com/PureParsa/task-manager-api.git
@@ -65,4 +67,6 @@ php artisan serve
 - Used Sanctum over Passport for token auth — simpler and fits API-only use case
 - Nested resource routing to reflect data hierarchy
 - Form Requests for all validation — keeps controllers clean
-- Scoped route binding to prevent cross-user data access
+- Scoped route binding to prevent cross-resource data access
+- Single BoardPolicy for all three controllers — lists and cards inherit board ownership
+- API Resources to control exact JSON response shape and prevent sensitive data leaks
