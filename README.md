@@ -15,7 +15,7 @@ A Trello-inspired REST API built with Laravel 11 & Sanctum.
 - [x] Ownership authorization (Laravel Policies)
 - [x] API Resources for consistent JSON responses
 - [x] Form Request validation
-- [ ] Feature tests (in progress)
+- [x] Feature tests 
 - [ ] Deploy (in progress)
 
 ## Installation
