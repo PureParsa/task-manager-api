@@ -14,7 +14,14 @@ test('Authenticated user can create a list under their board', function () {
 
     $response->assertStatus(201)->assertJson(['title' => 'test list' , 'board_id' => $board->id]);
 });
+test('unauthenticated user cannot create a list',function(){
+    $user = User::factory()->create();
+    $board = Board::factory()->create(['user_id' => $user->id ]);
 
+    $response = $this->postJson("/api/boards/{$board->id}/lists" , ['title' => 'new list'] );
+
+    $response->assertStatus(401);
+});
 test('User cannot create a list under another users board',function(){
     $user1 = User::factory()->create();
     $user2 = User::factory()->create();
