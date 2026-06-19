@@ -20,6 +20,7 @@ test('Authenticated user can create board',function(){
 
 test('Unauthenticated user cannot create board',function(){
         $response = $this->postJson('/api/boards', ['title' => 'test board']);
+
         $response->assertStatus(401);
 });
 
