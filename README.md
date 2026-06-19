@@ -4,8 +4,9 @@ A Trello-inspired REST API built with Laravel 11 & Sanctum.
 
 ## Tech Stack
 - PHP / Laravel 11
-- MySQL
+- MySQL / MariaDB
 - Laravel Sanctum (token authentication)
+- Pest (testing)
 
 ## Features
 - [x] User authentication (register, login, logout)
@@ -15,17 +16,26 @@ A Trello-inspired REST API built with Laravel 11 & Sanctum.
 - [x] Ownership authorization (Laravel Policies)
 - [x] API Resources for consistent JSON responses
 - [x] Form Request validation
-- [x] Feature tests 
-- [ ] Deploy (in progress)
+- [x] Scoped route model binding (prevents cross-user data access)
+- [x] Feature tests (Pest) — ~30 tests covering CRUD, auth, and authorization
+- [ ] Move cards between lists
+- [ ] Deployment
 
 ## Installation
-git clone https://github.com/PureParsa/task-manager-api.git
+```bash
+git clone https://github.com/YOUR_USERNAME/task-manager-api
 cd task-manager-api
 cp .env.example .env
 composer install
 php artisan key:generate
 php artisan migrate
 php artisan serve
+```
+
+## Running Tests
+```bash
+php artisan test
+```
 
 ## API Endpoints
 
@@ -64,9 +74,10 @@ php artisan serve
 | DELETE | /api/boards/{board}/lists/{list}/cards/{card} | Delete a card |
 
 ## Design Decisions
-- Used Sanctum over Passport for token auth — simpler and fits API-only use case
-- Nested resource routing to reflect data hierarchy
-- Form Requests for all validation — keeps controllers clean
-- Scoped route binding to prevent cross-resource data access
-- Single BoardPolicy for all three controllers — lists and cards inherit board ownership
-- API Resources to control exact JSON response shape and prevent sensitive data leaks
+- Used Sanctum over Passport for token auth — simpler and fits an API-only use case
+- Nested resource routing to reflect the data hierarchy (boards → lists → cards)
+- Form Requests for all validation — keeps controllers clean and focused
+- Scoped route model binding to guarantee a list/card actually belongs to the board/list in the URL, not just any record with that ID
+- Single `BoardPolicy` reused across Board, List, and Card controllers — lists and cards inherit ownership from their parent board
+- API Resources to control the exact JSON response shape and prevent sensitive fields (like `user_id` internals or password hashes) from leaking
+- Pest feature tests cover authentication, CRUD operations, validation, and authorization (ownership) for every resource
