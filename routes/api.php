@@ -13,8 +13,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('boards', BoardController::class);
-    Route::apiResource('boards.lists', BoardListController::class)
-        ->scoped();
-    Route::apiResource('boards.lists.cards', CardController::class)
-        ->scoped();
+    Route::apiResource('boards.lists', BoardListController::class)->scoped();
+
+    Route::patch('boards/{board}/lists/{list}/cards/{card}/move', [CardController::class, 'move']);
+
+    Route::apiResource('boards.lists.cards', CardController::class)->scoped();
 });

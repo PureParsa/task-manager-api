@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Card extends Model
 {
     use HasFactory;
-    protected $fillable = ['title' , 'description' , 'position' , 'due_date','is_completed'];
+    protected $fillable = ['title' , 'description' , 'position' , 'due_date','is_completed', 'board_list_id'];
     protected $casts = [
         'due_date'     => 'datetime',
         'is_completed' => 'boolean',

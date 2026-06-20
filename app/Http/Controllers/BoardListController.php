@@ -39,7 +39,7 @@ class BoardListController extends Controller
 
         $validated = $request->validated();
         $list->update($validated);
-        return response()->json(new BoardListResource($list), 200);
+        return response()->json(new BoardListResource($list->fresh()), 200);
     }
     public function destroy(Board $board, BoardList $list)
     {
