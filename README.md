@@ -13,12 +13,16 @@ A Trello-inspired REST API built with Laravel 11 & Sanctum.
 - [x] Board management (CRUD)
 - [x] List management (CRUD)
 - [x] Card management (CRUD)
+- [x] Move cards between lists
 - [x] Ownership authorization (Laravel Policies)
 - [x] API Resources for consistent JSON responses
 - [x] Form Request validation
-- [x] Scoped route model binding (prevents cross-user data access)
+- [x] Scoped route model binding (prevents cross-user/cross-board data access)
 - [x] Feature tests (Pest) — ~30 tests covering CRUD, auth, and authorization
-- [ ] Move cards between lists
+
+## Future Improvements
+- [ ] Card reordering within a list (full drag-and-drop position logic with automatic re-indexing)
+- [ ] Board members / sharing a board with other users
 - [ ] Deployment
 
 ## Installation
@@ -72,6 +76,7 @@ php artisan test
 | GET | /api/boards/{board}/lists/{list}/cards/{card} | Get one card |
 | PATCH | /api/boards/{board}/lists/{list}/cards/{card} | Update a card |
 | DELETE | /api/boards/{board}/lists/{list}/cards/{card} | Delete a card |
+| PATCH | /api/boards/{board}/lists/{list}/cards/{card}/move | Move a card to a different list |
 
 ## Design Decisions
 - Used Sanctum over Passport for token auth — simpler and fits an API-only use case
@@ -79,5 +84,6 @@ php artisan test
 - Form Requests for all validation — keeps controllers clean and focused
 - Scoped route model binding to guarantee a list/card actually belongs to the board/list in the URL, not just any record with that ID
 - Single `BoardPolicy` reused across Board, List, and Card controllers — lists and cards inherit ownership from their parent board
-- API Resources to control the exact JSON response shape and prevent sensitive fields (like `user_id` internals or password hashes) from leaking
+- API Resources to control the exact JSON response shape and prevent sensitive fields (like password hashes) from leaking
+- Move-card endpoint validates that the destination list belongs to the same board, preventing a card from being moved into another user's board
 - Pest feature tests cover authentication, CRUD operations, validation, and authorization (ownership) for every resource
