@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Board\UpdateBoardRequest;
+use App\Http\Requests\Card\MoveCardRequest;
 use App\Http\Requests\Card\StoreCardRequest;
 use App\Http\Requests\Card\UpdateCardRequest;
 use App\Http\Resources\CardResource;
@@ -42,7 +43,7 @@ class CardController extends Controller
 
         $validated = $request->validated();
         $card->update($validated);
-        return response()->json(new CardResource($card) , 200);
+        return response()->json(new CardResource($card->fresh()), 200);
     }
     public function destroy(UpdateCardRequest $request , Board $board , BoardList $list ,Card $card)
     {
@@ -50,5 +51,15 @@ class CardController extends Controller
 
         $card->delete();
         return response()->json(null, 204);
+    }
+    public function move(MoveCardRequest $request , Board $board , BoardList $list ,Card $card ){
+
+        $this->authorize('update', $board);
+
+        $validated = $request->validated();
+
+        $card->update($validated);
+
+        return response()->json(new CardResource($card->fresh()), 200);
     }
 }

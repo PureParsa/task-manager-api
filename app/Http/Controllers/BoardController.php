@@ -28,7 +28,7 @@ class BoardController extends Controller
         $this->authorize('update',$board);
         $validated = $request->validated();
         $board->update($validated);
-        return response()->json(new BoardResource($board), 200);
+        return response()->json(new BoardResource($board->fresh()), 200);
     }
     public function show(board $board){
         $this->authorize('view',$board);
